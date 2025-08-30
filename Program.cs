@@ -1,6 +1,6 @@
 ﻿// StuartFy
 
-string mensagemDeInicio = "\nBoas vindas ao StuartFy11, um aplicativo de músicas teste baseado em aprendizados de C#.";
+string mensagemDeInicio = "\nBoas vindas ao StuartFy1, um aplicativo de músicas teste baseado em aprendizados de C#.";
 
 // Uma das formas de isolar um código sem precisar copia-lo várias vezes é criando uma função 
 
