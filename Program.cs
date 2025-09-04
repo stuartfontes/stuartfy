@@ -1,8 +1,11 @@
 ﻿// StuartFy
 
 string mensagemDeInicio = "\nBoas vindas ao StuartFy, um aplicativo de músicas teste baseado em aprendizados de C#.";
-List<string> listaDasBandas = new List<string>{"u2","u3","u4"};
+//List<string> listaDasBandas = new List<string>{"u2","u3","u4"};
 
+Dictionary<string, List<int>> bandasRegistradas = new Dictionary<string, List<int>>();
+bandasRegistradas.Add("C#", new List<int>() { 1, 2, 3 });
+bandasRegistradas.Add("tatAtA", new List<int>());
 // Uma das formas de isolar um código sem precisar copia-lo várias vezes é criando uma função 
 
 void ExibirLogo()
@@ -40,7 +43,7 @@ void Exibir_menu()
             break;
         case 2: mostrarBandasRegistradas();
             break;
-        case 3: Console.WriteLine("Avalie a banda selecionada");
+        case 3: avaliarUmaBanda();
             break;
         case 4: Console.WriteLine("Essas são as notas já avaliadas");
             break;
@@ -55,15 +58,13 @@ void Exibir_menu()
     void RegistrarBanda()
     {
         Console.Clear();
-        Console.WriteLine("**********************");
-        Console.WriteLine("\nRegistro de Bandas\n");
-        Console.WriteLine("**********************\n");
+        ExibirTituloDaOpcao("Registro das Bandas");
         Console.Write("Digite o nome da banda que deseja registrar: ");
         string nomeDaBanda = Console.ReadLine()!;
         Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso" +
                           $"\nRetornando ao menu;" +
                           $"\nAguarde...");
-        listaDasBandas.Add(nomeDaBanda);
+        bandasRegistradas.Add(nomeDaBanda, new List<int>());
         Thread.Sleep(2000);
         Console.Clear();
         Exibir_menu();
@@ -72,15 +73,13 @@ void Exibir_menu()
     void mostrarBandasRegistradas()
     {
         Console.Clear();
-        Console.WriteLine("****************************");
-        Console.WriteLine("\nExibindo bandas, Aguardade:\n");
-        Console.WriteLine("*****************************");
+        ExibirTituloDaOpcao("Exibindo as bandas registradas");
         //for (int i = 0; i < listaDasBandas.Count; i++)
         //{
            // Console.WriteLine($"Banda: {listaDasBandas[i]}");
         // }
         Console.WriteLine("\nAs bandas registradas são\n");
-        foreach (string banda in listaDasBandas)
+        foreach (string banda in bandasRegistradas.Keys)
         {
             Console.WriteLine($"{banda}\n");
         }
@@ -92,7 +91,48 @@ void Exibir_menu()
 
     }
 
+    void ExibirTituloDaOpcao(string titulo)
+    {
+        int quantidadeDeLetras = titulo.Length;
+        string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
+        Console.Write(asteriscos + "\n");
+        Console.Write(titulo + "\n");
+        Console.Write(asteriscos + "\n");
+    }
 
+    void avaliarUmaBanda()
+    {
+        //Digite qual banda deseja avaliar
+        // Se a banda existir atribuir uma nota
+        // Se não, voltar ao menu principal
+        Console.Clear();
+        ExibirTituloDaOpcao("Avaliar bandas registradas");
+        Console.Write("Digite o nome da banda que deseja avaliar: ");
+        string nomeDaBanda = Console.ReadLine()!;
+        Console.WriteLine($"A banda {nomeDaBanda} foi selecionada com sucesso;");
+        Console.WriteLine("Iniciando avaliação da banda;\n");
+        Thread.Sleep(2000);
+        if (bandasRegistradas.ContainsKey(nomeDaBanda))
+        {
+            Console.Write($"Qual a nota deseja atribuir a banda {nomeDaBanda}: ");
+            int nota = int.Parse(Console.ReadLine()!);
+            bandasRegistradas[nomeDaBanda].Add(nota);
+            Console.Write($"Registrando nota {nota};\nAguarde...\n");
+            Thread.Sleep(2000);
+            Console.Write($"A {nota} foi registrada para a banda {nomeDaBanda}");
+            Thread.Sleep(5000);
+            Console.Clear();
+            Exibir_menu();
+        }
+        else
+        {
+            Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada:");
+            Console.WriteLine("Digite uma tecla para voltar ao menu principal;");
+            Console.ReadKey();
+            Console.Clear();
+            Exibir_menu();
+        }
+    }
     Exibir_menu();
     
     
